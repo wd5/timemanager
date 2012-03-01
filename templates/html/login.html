@@ -1,0 +1,56 @@
+{% extends "html/base.html" %}
+{% load i18n %}
+
+{% block subtitle %}Sign In{% endblock %}
+
+{% block panel %}
+<ul class="nav">
+  <li><a href="/">Главная</a></li>
+  <li><a href=".">Рабочий кабинет.</a></li>
+</ul>
+{% endblock panel %}
+
+
+{% block main_content %}
+<div class="inner mini-layout" style="width:400px; margin:10px; float:right;">
+  <div id="login" class="ext-form">
+    <h1>Sign In</h1>
+    <form method="post" action="{% url django.contrib.auth.views.login %}">{% csrf_token %}
+      {% if form.errors and not form.errors.username and not form.errors.password %}
+      <div class="clearfix error">
+	<div class="input">
+	  <span class="help-inline">
+	    {% trans "Your username and password didn't match. Please try again." %}
+	  </span>
+	</div>
+      </div>
+      {% endif %}
+      <div class="clearfix {% if form.errors.username %}error{% endif %}">
+	<label for="id_{{ form.username.html_name }}">{% trans 'Email' %}</label>
+	<div class="input">
+	  {{ form.username }}
+	  {% if form.errors.username %}
+	  {% for er in form.errors.username %}
+	  <span class="help-inline">{{er}}</span>
+	  {% endfor %}
+	  {% endif %}
+	</div>
+      </div>
+
+      <div class="clearfix {% if form.errors.password %}error{% endif %}">
+	{{ form.password.label_tag }}
+	<div class="input">
+	  {{ form.password }}
+	  {% if form.errors.password %}
+	  {% for er in form.errors.password %}
+	  <span class="help-inline">{{er}}</span>
+	  {% endfor %}
+	  {% endif %}
+	</div>
+      </div>
+      <button style="float:right;" class="btn default" type="submit">{% trans 'Sign In' %}</button>
+      <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+  </div>
+</div>
+{% endblock %}

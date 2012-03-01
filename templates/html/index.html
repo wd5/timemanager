@@ -1,0 +1,35 @@
+{% extends 'html/base.html'  %}
+
+{% load i18n %}
+{% block subtitle %}Bootstrap, from Twitter{% endblock %}
+
+
+{% block panel %}
+<ul class="nav">
+  <li class="active"><a href="/">Главная</a></li>
+  <li><a href="accounts">Рабочий кабинет.</a></li>
+</ul>
+{% endblock panel %}
+
+    <!-- Header -->
+
+  {% block header %}
+      <div class="inner">
+	<div class="container">
+	  <h1>Завхоз времени.</h1>
+	  <p>Данный сервис посвящен контролю над распределением всоего времени.</p>
+	</div>
+      </div>
+  {% endblock header %}
+
+<!-- Content -->
+  {% block main_content %}
+      <div class="mini-layout fluid" style="height:auto; border:none;">
+	<div class="mini-layout-sidebar" style="width:20%; padding:2%; height:auto;">
+	  <p>Предполагаю разместить здесь некоторую общую информацию для всех пользователей</p>
+	</div>
+	<div class="mini-layout-body" style="width:70%; padding:2%;height:auto;">
+	  <p>Данный блок содержит непосредственно контент.</p>
+	</div>
+      </div>
+  {% endblock main_content %}
