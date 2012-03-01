@@ -28,3 +28,6 @@ handlers:
 
 - url: /.*
   script: djangoappengine.main.application
+
+- url: /media
+  static_dir: /media/
