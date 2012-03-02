@@ -11,9 +11,26 @@ function addStiker (ev) {
     s.css('left',ev.layerX.toString()+'px');
     s.css('top',ev.layerY.toString()+'px');
 
+    addTask();
+}
+
+function addTask(){
+    $.ajax({
+	       method : 'GET',
+	       url : 'add-task/',
+	       data : {},
+	       success : function(){}
+	   });
 }
 
 function removeStiter (ev) {
+    $.ajax({
+	       method : 'GET',
+	       url : $(ev.originalTarget).attr('taskId')+'/del-task/',
+	       data : {},
+	       success : function(){}
+	   });
+
     $(ev.originalTarget).parent().remove();
 }
 

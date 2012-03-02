@@ -26,3 +26,8 @@ class Task(models.Model):
         if not self.name:
             self.name='task_'+str(self.id)
         
+class WallTask(models.Model):
+    title = models.CharField(max_length=32, null = False)
+    text_task = models.TextField()
+    position_x = models.IntegerField(null=False)
+    position_y = models.IntegerField(null=False)

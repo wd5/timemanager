@@ -21,7 +21,7 @@
     <a id='topbar' class="dropdown-toggle" href="#">Dropdown</a>
     <ul class="dropdown-menu">
       <li>
-	<a href="/account/logout/">log out</a>
+	<a href="/accounts/logout/">log out</a>
       </li>
       <li class="divider"></li>
     </ul>
@@ -50,6 +50,8 @@
 	  Email: m@m.m
 	</div>
 	<div id="wall" class="mini-layout-body" >
+
+<!--	<div id="wall" class="mini-layout-body" >
 	  <div class="stiker">
 	    <div class="close">x</div>
 	    <h1>Тестовое задание</h1>
@@ -58,6 +60,19 @@
 	      Alex
 	    </p>
 	  </div>
+	</div>
+-->
+{% for t in tasks %}
+	  <div class="stiker">
+	    <div class="close" taskId="{{t.id}}">x</div>
+	    <h1>{{t.title}}</h1>
+	    <p>{{t.text_task}}</p>
+	    <p id="to-user">
+	      Alex
+	    </p>
+	  </div>
+{% endfor %}
+
 	</div>
       </div>
   {% endblock main_content %}
