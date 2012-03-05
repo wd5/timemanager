@@ -4,19 +4,28 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 
-from django.contrib.auth.decorators import login_required
+#from django.contrib.auth.decorators import login_required
+from my_auth.decorators import login_required
 
 from account.models import WallTask
+from my_auth.models import User
+import base64
 
 @login_required
 def main_page(request):
+    s = base64.decodestring(request.session['my_au']).split(';')[0].split('=')[1]
+    u = get_object_or_404(User,id=s)
+    context={'user':u}
     return render_to_response('html/accounts.html',
-                              {},
+                              context,
                               context_instance=RequestContext(request))
 
 @login_required
 def wall_page(request):
-    context = {'tasks':WallTask.objects.all()}
+    s = base64.decodestring(request.session['my_au']).split(';')[0].split('=')[1]
+    u = get_object_or_404(User,id=s)
+    context={'user':u}
+    context['tasks'] = WallTask.objects.all()
     return render_to_response('html/wall.html',
                               context,
                               context_instance=RequestContext(request))

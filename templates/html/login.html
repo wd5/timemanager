@@ -15,7 +15,7 @@
 <div class="inner mini-layout" style="width:400px; margin:10px; float:right;">
   <div id="login" class="ext-form">
     <h1>Sign In</h1>
-    <form method="post" action="{% url django.contrib.auth.views.login %}">{% csrf_token %}
+    <form method="post" action="{% url my_auth.views.login %}">{% csrf_token %}
       {% if form.errors and not form.errors.username and not form.errors.password %}
       <div class="clearfix error">
 	<div class="input">
@@ -26,11 +26,11 @@
       </div>
       {% endif %}
       <div class="clearfix {% if form.errors.username %}error{% endif %}">
-	<label for="id_{{ form.username.html_name }}">{% trans 'Email' %}</label>
+	<label for="id_username">Login: </label>
 	<div class="input">
-	  {{ form.username }}
-	  {% if form.errors.username %}
-	  {% for er in form.errors.username %}
+	  <input id="username" type="text" name="username"/>
+	  {% if errors.username %}
+	  {% for er in errors.username %}
 	  <span class="help-inline">{{er}}</span>
 	  {% endfor %}
 	  {% endif %}
@@ -38,17 +38,19 @@
       </div>
 
       <div class="clearfix {% if form.errors.password %}error{% endif %}">
-	{{ form.password.label_tag }}
+	<label for="id_password">Password: </label>
 	<div class="input">
-	  {{ form.password }}
-	  {% if form.errors.password %}
-	  {% for er in form.errors.password %}
+	  <input id="password" type="password" name="password"/>
+	  {% if errors.password %}
+	  {% for er in errors.password %}
 	  <span class="help-inline">{{er}}</span>
 	  {% endfor %}
 	  {% endif %}
 	</div>
       </div>
-      <button style="float:right;" class="btn default" type="submit">{% trans 'Sign In' %}</button>
+      <button style="float:right;" class="btn default" type="submit">
+	SignIn
+      </button>
       <input type="hidden" name="next" value="{{ next }}" />
     </form>
   </div>

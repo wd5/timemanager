@@ -12,12 +12,13 @@ urlpatterns = patterns('',
                        (r'^$','middleware.index'),
                        (r'^admin/', include(admin.site.urls)),
                        (r'^accounts/',include('account.urls')),
-                       url(r'^accounts/login/$','django.contrib.auth.views.login',
-                           { 'template_name' : 'html/login.html',
-                             'authentication_form' : LoginForm},
+#                       url(r'^accounts/login/$','django.contrib.auth.views.login',
+#                           { 'template_name' : 'html/login.html',
+#                             'authentication_form' : LoginForm},
+                       url(r'^accounts/login/$','my_auth.views.login',
                            name="account_login"),
-                       url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
-                           { 'next_page' : '/' }, name="account_logout"),
+                       url(r'^accounts/logout/$', 'my_auth.views.logout', #,django.contrib.auth.views.logout',
+                           name="account_logout"),
                        )
 
 

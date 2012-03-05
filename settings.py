@@ -3,6 +3,13 @@
 # of "djangoappengine" from this file.
 from djangoappengine.settings_base import *
 
+from my_auth.models import User
+cur = User.objects.filter(username='alex')
+if not cur: 
+    u=User(username="alex",password="9e7baa717d13b439b6f6d3e40f008462",salt=10)
+    u.save()
+
+
 import os
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -27,7 +34,8 @@ INSTALLED_APPS = (
     'djangotoolbox',
     'autoload',
     'dbindexer',
-
+    'my_auth',
+    
     # djangoappengine should come last, so it can override a few manage.py commands
     'djangoappengine',
 )
