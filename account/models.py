@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
+from my_auth.models import User
 
 # Create your models here.
 
@@ -27,6 +27,7 @@ class Task(models.Model):
             self.name='task_'+str(self.id)
         
 class WallTask(models.Model):
+    owner = models.ForeignKey(User)
     title = models.CharField(max_length=32, null = False)
     text_task = models.TextField()
     position_x = models.IntegerField(null=False)

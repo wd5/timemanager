@@ -1,8 +1,11 @@
+ # -*- coding: utf-8 -*-
+ 
 from django.conf import settings
 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from django.utils import simplejson
 
 #from django.contrib.auth.decorators import login_required
 from my_auth.decorators import login_required
@@ -30,15 +33,30 @@ def wall_page(request):
                               context,
                               context_instance=RequestContext(request))
 
+@login_required
 def add_wall_task(request):
-#    wt=WallTask(title='test',text_task='T',position_x=1,position_y=1)
-#    wt.save()
-    return HttpResponse('Ok',mimetype='text/plain')
-
-def add_wall_task(request):
-    wt=WallTask(title='test',text_task='TTTTTTTTTTTTTTT',position_x=1,position_y=1)
-    wt.save()
-    return HttpResponse('Ok',mimetype='text/plain')
+    errors = []
+    d = {}
+    s = base64.decodestring(request.session['my_au']).split(';')[0].split('=')[1]
+    u = User.objects.filter(id=int(s))
+    if not u:
+        errors.append('Вы должны авторизоваться')
+    else:
+        u=u[0]
+    try:
+        d['title'] = request.GET['title']
+        d['text'] = request.GET['text']
+        d['x'] = request.GET['x']
+        d['y'] = request.GET['y']
+    except:
+        errors.append('Указаны не все параметры!')
+    if not errors:
+        wt=WallTask(title=d['title'],text_task=d['text'],position_x=d['x'],position_y=d['y'], owner=u)
+        d['user'] = u.username
+        wt.save()
+        d['id'] = wt.id
+    return HttpResponse(simplejson.dumps({'errors':errors,'data':d}),
+                        mimetype='text/json')
 
 def del_wall_task(request,task_id):
     t = WallTask.objects.get(id=task_id)
