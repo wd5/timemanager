@@ -56,9 +56,18 @@
 	    <div class="close" taskId="{{t.id}}">x</div>
 	    <h1>{{t.title}}</h1>
 	    <p>{{t.text_task}}</p>
-	    <p id="to-user">
+	    <p class="to-user">
 	      Alex
 	    </p>
+	    <p id="state-{{t.id}}">Состояние: 
+	      {% if t.id == active_task %}
+	      <span style="color:green">active</span>
+	      {% else %}
+	      <span style="color:blue">unactive</span>
+	      {% endif %}
+	    </p>
+	    <div id="deactivate-{{t.id}}" class="btn danger deactivate-task" taskId="{{t.id}}" {% if t.id != active_task %}style="display:none"{% endif %}>Stop</div>
+	    <div id="activate-{{t.id}}" class="btn success activate-task" taskId="{{t.id}}" {% if t.id == active_task %}style="display:none"{% endif %}>Start</div>
 	  </div>
 {% endfor %}
 

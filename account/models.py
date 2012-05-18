@@ -25,10 +25,18 @@ class Task(models.Model):
         super(Task,self).save()
         if not self.name:
             self.name='task_'+str(self.id)
-        
+
+
 class WallTask(models.Model):
     owner = models.ForeignKey(User)
     title = models.CharField(max_length=32, null = False)
     text_task = models.TextField()
     position_x = models.IntegerField(null=False)
     position_y = models.IntegerField(null=False)
+
+class ActiveTask(models.Model):
+    user = models.ForeignKey(User)
+    task = models.ForeignKey(WallTask)
+    begin = models.DateTimeField(auto_now_add=True, null=True)
+    end = models.DateTimeField(null=True)
+    length = models.IntegerField(default=0)

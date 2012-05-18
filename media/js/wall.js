@@ -60,7 +60,7 @@ function addTask(x,y){
 	   });
 }
 
-function removeStiter (ev) {
+function removeStiker (ev) {
     $.ajax({
 	       method : 'GET',
 	       url : $(ev.target).attr('taskId')+'/del-task/',
@@ -71,11 +71,54 @@ function removeStiter (ev) {
     $(ev.target).parent().remove();
 }
 
+function _activateTask(task_id){
+    $('#activate-'+task_id).hide();
+    $('#deactivate-'+task_id).show();
+    $('#state-'+task_id).html('Состояние: <span style="color:green">active</span>');
+}
+
+function _unactivateTask(task_id){
+    $('#deactivate-'+task_id).hide();
+    $('#activate-'+task_id).show();
+    $('#state-'+task_id).html('Состояние: <span style="color:blue">unactive</span>');
+}
+
+
+function activateTask (ev){
+    $.ajax({
+	       method : 'GET',
+	       url : $(ev.target).attr('taskId')+'/activate/',
+	       data : {},
+	       success : function(data){
+		   if(!data['error']){
+		       _activateTask(data['task_id']);
+		       if(data['stop_task_id']>=0)
+			   _unactivateTask(data['stop_task_id']);
+		   }
+	       }
+	   });
+}
+
+function deactivateTask (ev){
+    $.ajax({
+	       method : 'GET',
+	       url : $(ev.target).attr('taskId')+'/deactivate/',
+	       data : {},
+	       success : function(data){
+		   if(!data['error']){
+		       _unactivateTask(data['task_id']);
+		   }
+	       }
+	   });
+}
+
 $(document).ready(
     function () {
 	$('.topbar').dropdown();
 	$('#wall').click(addStiker);
-	$('.close').click(removeStiter);
+	$('.close').click(removeStiker);
+	$('.activate-task').click(activateTask);
+	$('.deactivate-task').click(deactivateTask);
     });
 
 
