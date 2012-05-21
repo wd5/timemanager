@@ -109,5 +109,14 @@ def activate_task(request,task_id):
                                           'stop_task_id':stop_task}),mimetype='text/json')
 
 def deactivate_task(request,task_id):
+    s = base64.decodestring(request.session['my_au']).split(';')[0].split('=')[1]
+    u = get_object_or_404(User,id=s)
+    t = WallTask.objects.get(id=task_id)
+    active_tasks = ActiveTask.objects.filter(user=u,task=t)
+    if active_tasks:
+        stop_task = active_tasks[0]
+        stop_task.end = datetime.now()
+        stop_task.length = time.mktime(stop_task.end.timetuple()) - time.mktime(stop_task.begin.timetuple())
+        stop_task.save()
     return HttpResponse(simplejson.dumps({'error':False,
                                           'task_id':task_id}),mimetype='text/json')
