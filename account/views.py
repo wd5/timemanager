@@ -163,7 +163,7 @@ def statictic_by_wall_task(request,task_id):
     period_activiti = None
     if active_tasks:
         if active_tasks.count()>1:
-            all_time = reduce(lambda x,y:x.length+y.length,active_tasks)
+            all_time = sum(map(lambda x:x.length,active_tasks))
         else:
             all_time = active_tasks[0].length
         period_activiti = [min(map(lambda x:x.begin,active_tasks)),
