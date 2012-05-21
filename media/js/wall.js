@@ -1,6 +1,11 @@
 var tmp;
+var flagmove=false;
+var flagupdate=false;
+var moveEl;
+var x0,y0;
+var x1,y1;
+
 function addStiker (ev) {
-    tmp=ev;
     if(ev.target.id!='wall')
 	return;
     showPopupAdd(ev.pageX,ev.pageY,ev.layerX,ev.layerY);
@@ -112,6 +117,32 @@ function deactivateTask (ev){
 	   });
 }
 
+
+function updateTask(task_id,param){
+    $.ajax({
+	       method : 'GET',
+	       url : task_id+'/update-task/',
+	       data : param,
+	       success : function(data){
+	       }
+	   });    
+}
+
+function moveTask (ev){
+    if (flagmove){
+	var w=moveEl.position();
+	moveEl.css('left',(w.left+(ev.pageX-x0)).toString()+'px');
+	moveEl.css('top',(w.top+(ev.pageY-y0)).toString()+'px');	
+	x1=w.left+(ev.pageX-x0);
+	y1=w.top+(ev.pageY-y0);
+
+	var w=$('#wall').position();
+	x0 = ev.pageX;
+	y0 = ev.pageY;
+	flagupdate=true;
+    }
+}
+
 $(document).ready(
     function () {
 	$('.topbar').dropdown();
@@ -119,6 +150,24 @@ $(document).ready(
 	$('.close').click(removeStiker);
 	$('.activate-task').click(activateTask);
 	$('.deactivate-task').click(deactivateTask);
+	$('.stiker').mousedown(function(ev){
+				   moveEl = $(ev.target);
+				   if (moveEl.attr('class')=='stiker')
+				       {
+					   flagmove=true;
+					   var w=$('#wall').position();
+					   x0 = ev.pageX;
+					   y0 = ev.pageY;
+				       }
+			       });
+	$('.stiker').mouseup(function(ev){
+					  if (flagupdate && flagmove){
+					      updateTask(moveEl.find('.close').attr('taskid'),{'x':x1,'y':y1});
+					  }
+				          flagmove=false;
+					  flagupdate=false;
+					    });
+	$('body').mousemove(moveTask);
     });
 
 
