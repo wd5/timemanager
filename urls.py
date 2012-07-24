@@ -19,6 +19,7 @@ urlpatterns = patterns('',
                            name="account_login"),
                        url(r'^accounts/logout/$', 'my_auth.views.logout', #,django.contrib.auth.views.logout',
                            name="account_logout"),
+                       (r'^testing/',include('testing.urls')),
                        )
 
 

@@ -1,0 +1,30 @@
+{% extends 'html/testing/base.html'  %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block testing_content %}
+<table class="table-striped table">
+  <thead>
+    <tr>
+      <th class="header headerSortUp">Название</th>
+      <th class="green header" >Колличество страниц</th>
+      <th class="green header" >Дата создания</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for P in projects %}
+    <tr>
+      <td >
+	<strong><a href="{{P.id}}">{{ P.name }}</a></strong>
+      </td>
+      <td>{{ P.testpage_set.count }}</td>
+      <td>{{ P.created }}</td>
+      <td >
+	<a href="#" class="btn btn-danger">delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock testing_content %}

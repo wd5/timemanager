@@ -1,0 +1,57 @@
+{% extends 'html/base.html'  %}
+
+{% load i18n %}
+
+{% block subtitle %}Тестирование.{% endblock %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block panel %}
+<ul class="nav">
+  <li><a href="/">Главная</a></li>
+  <li><a href="/accounts/">Рабочий кабинет.</a></li>
+  <li><a href=".">Стена задач.</a></li>
+  <li class="active"><a href=".">Тестирование.</a></li>
+</ul>
+
+<ul class="nav secondary-nav">
+  <li class="dropdown">
+    <a id='topbar' class="dropdown-toggle" href="#">{{user.username}}</a>
+    <ul class="dropdown-menu">
+      <li>
+	<a href="/accounts/logout/">log out</a>
+      </li>
+      <li class="divider"></li>
+    </ul>
+  </li>
+</ul>
+{% endblock panel %}
+
+
+
+    <!-- Header -->
+
+  {% block header %}
+      <div class="inner">
+	<div class="container">
+	  <h2>Список проектов</h2>
+	  <p></p>
+	</div>
+      </div>
+  {% endblock header %}
+
+<!-- Content -->
+  {% block main_content %}
+      <div class="mini-layout fluid" style="height:auto; border:none;box-shadow: none;">
+	<div class="mini-layout-sidebar" style="width:20%; padding:2%; height:auto;">
+	  <p>Name: {{user.username}}</p>
+	  <p>Email: {{user.email}}</p>
+	</div>
+	<div class="mini-layout-body" style="width:70%; padding:2%; height:auto;">
+	  {% block testing_content %}
+	  {% endblock testing_content %}
+	</div>
+
+      </div>
+  {% endblock main_content %}

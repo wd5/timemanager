@@ -1,0 +1,6 @@
+from django import forms
+from testing.models import Project, TestPage
+
+class ProjectForm(forms.ModelForm):
+      
+      

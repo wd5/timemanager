@@ -1,0 +1,31 @@
+{% extends 'html/testing/base.html'  %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block testing_content %}
+<table class="table-striped table">
+  <thead>
+    <tr>
+      <th class="header headerSortUp">Идентификатор</th>
+      <th class="green header" >Права просмотра</th>
+      <th class="green header" >Дата создания</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for P in project.testpage_set.all %}
+    <tr>
+      <td >
+	<a href="{% url testing_edit_testpage project.id P.id %}"><strong>{{ P.slug }}</strong>
+	 <a href="{% url testing_view_testpage P.slug %}">Просмотр</a>
+      </td>
+      <td>{{ P.permissions }}</td>
+      <td>{{ P.created }}</td>
+      <td >
+	<a href="#" class="btn btn-danger">delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock testing_content %}
